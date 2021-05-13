@@ -1,0 +1,13 @@
+{
+    "name": "HoangHa",
+    "alias": "hoangha",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\HoangHa\\Providers\\HoangHaServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

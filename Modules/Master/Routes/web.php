@@ -26,4 +26,6 @@ Route::prefix('master')->group(function() {
     Route::post('/z002/getAll', 'Z002Controller@getAll');
     Route::post('z002/delete', 'Z002Controller@destroy');
 
+    //zoo3
+    Route::get('z003', 'Z003Controller@index');
 });

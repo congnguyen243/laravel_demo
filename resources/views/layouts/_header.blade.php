@@ -19,18 +19,21 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-            <a class="nav-link" href="/master/z001">Home</a>
+                <a class="nav-link" href="/master/z001">Home</a>
             </li>
             <li class="nav-item">
-            <a class="nav-link" href="/master/z002">Product</a>
+                <a class="nav-link" href="/master/z002">Product</a>
             </li>
             <li class="nav-item dropdown">
-            <a class="nav-link" href="/master/z001" >
+                <a class="nav-link" href="/master/z001" >
                 Danh mục
             </a>
             </li>
             <li class="nav-item">
-            <a class="nav-link" href="#">User</a>
+                <a class="nav-link" href="#">User</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/master/z003">Order</a>
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">

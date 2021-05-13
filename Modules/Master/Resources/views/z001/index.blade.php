@@ -20,7 +20,7 @@
     </script>
 @endsection
 @section('content')
-<div class="">
+<div >
     <!-- Breadcrumbs-->
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
@@ -28,8 +28,8 @@
         </li>
         <li class="breadcrumb-item active">Category</li>
     </ol>
-    <div class="row mx-5 ">
-        <div class="">
+    <div class="mx-5 ">
+        <div>
             <h3 class="text-center">List of Category</h3>
             <hr>
             <div class=" text-left">

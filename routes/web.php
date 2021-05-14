@@ -59,6 +59,10 @@ Route::get('/overloading',function(){
     return view('overloading');
 });
 
+Route::get('/chapter4',function(){
+    return view('chapter4');
+});
+
 // Route::post('/post','FormController@store');
 // Route::get('/show', 'FormController@show');
 // Route::get('/test',function(){

@@ -26,7 +26,7 @@
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link" href="/master/z001" >
-                Danh mục
+                Category
             </a>
             </li>
             <li class="nav-item">

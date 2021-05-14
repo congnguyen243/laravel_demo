@@ -37,3 +37,10 @@
     text-decoration: none;
     cursor: pointer;
   }
+
+  #product_content{
+    white-space: nowrap; 
+    width: 100px; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
+  }

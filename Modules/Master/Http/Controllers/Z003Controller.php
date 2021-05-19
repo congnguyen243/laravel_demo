@@ -38,40 +38,29 @@ class Z003Controller extends Controller
     public function create(Request $request)
     {
         $params = $request->all();
-        $validator = Validator::make($params, [
+        $validated = $request->validate([
             'name' => 'required',
             'phone' => 'required|numeric',
             'address' => 'required',
             'date' => 'required',
             'email' => 'required|email',
         ]);
-    
-        if ($validator->fails()) {
-            $result = array(
-                'status' => '123',
-                'data' => $params,
-            );
-            return response()->json($result);
-        }
-        else{
-            $order= $this->orderRepo->create([
-                'name'=>$params['name'],
-                'phone'=>$params['phone'],
-                'avatar'=>$params['avatar'],
-                'address'=>$params['address'],
-                'email'=>$params['email'],
-                'date'=>$params['date'],
-                'quantity'=>$params['quantity'],
-                'total'=>$params['total'],
-                'note'=>$params['note']
-            ]);
-            $result = array(
-                'status' => '200',
-                'data' => $order,
-            );
-            return response()->json($result);
-        }
-        
+        $order= $this->orderRepo->create([
+            'name'=>$params['name'],
+            'phone'=>$params['phone'],
+            'avatar'=>"",
+            'address'=>$params['address'],
+            'email'=>$params['email'],
+            'date'=>$params['date'],
+            'quantity'=>1,
+            'total'=>1,
+            'note'=>$params['note']
+        ]);
+        $result = array(
+            'status' => '200',
+            'data' => $order,
+        );
+        return response()->json($result);
     }
 
     /**

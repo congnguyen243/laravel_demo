@@ -299,20 +299,20 @@
 
         var initSubmit = function () {
             el.btnSubmitOrder.on('click', function(){
-                
                 // $('#form-order').on('submit',function(ev){
                 //     ev.preventDefault();
                 // })
-                var data ={};
-                data['name'] = $('#name-customer').val();
-				data['phone'] = $('#phone-customer').val();
-				data['address'] = $('#address-customer').val();
-				data['email'] = $('#mail-customer').val();
-				data['date'] = $('#date-picker-example').val();
-				data['note'] = $('#note-order').val();
-				data['avatar'] = "test"
-				data['quantity'] = 1;
-				data['total'] = 1;
+                var data = $('#form-order').serialize();
+                // data['name'] = $('#name-customer').val();
+				// data['phone'] = $('#phone-customer').val();
+				// data['address'] = $('#address-customer').val();
+				// data['email'] = $('#mail-customer').val();
+				// data['date'] = $('#date-picker-example').val();
+				// data['note'] = $('#note-order').val();
+				// data['avatar'] = "test"
+				// data['quantity'] = 1;
+				// data['total'] = 1;
+                console.log("data",data);
                 save(data);
             })
         }

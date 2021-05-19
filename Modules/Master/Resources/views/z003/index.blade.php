@@ -52,10 +52,10 @@
                                             <label class="order-form-label">Full Name</label>
                                         </div>
                                         <div class="col-12 col-sm-6">
-                                            <input class="order-form-input"  id="name-customer" placeholder="Full Name" required>
+                                            <input class="order-form-input"  id="name-customer" placeholder="Full Name" required name="name">
                                         </div>
                                         <div class="col-12 col-sm-6 mt-2 mt-sm-0">
-                                            <input class="order-form-input" type="file">
+                                            <input class="order-form-input" type="file" name="avatar">
                                         </div>
                                     </div>
                                     <div class="row mt-3 mx-4">
@@ -63,7 +63,7 @@
                                             <label class="order-form-label">Phone Number</label>
                                         </div>
                                         <div class="col-12">
-                                            <input class="order-form-input"  id="phone-customer" placeholder="Phone Number" type="tel" pattern="[0]{1}[0-9]{9}" required>
+                                            <input class="order-form-input"  id="phone-customer" placeholder="Phone Number" type="tel" pattern="[0]{1}[0-9]{9}" required name="phone">
                                             <br><small>Format: 0123456789</small><br>
                                         </div>
                                     </div>
@@ -72,7 +72,7 @@
                                             <label class="order-form-label">Address</label>
                                         </div>
                                         <div class="col-12">
-                                            <input class="order-form-input"  id="address-customer" placeholder="Address">
+                                            <input class="order-form-input"  id="address-customer" placeholder="Address" name="address">
                                         </div>
                                     </div>
                                     <div class="row mt-3 mx-4">
@@ -80,7 +80,7 @@
                                             <label class="order-form-label">Email</label>
                                         </div>
                                         <div class="col-12">
-                                            <input class="order-form-input" id="mail-customer" placeholder="Email" type="email" required>
+                                            <input class="order-form-input" id="mail-customer" placeholder="Email" type="email" required name="email">
                                         </div>
                                     </div>
                                     <div class="row mt-3 mx-4">
@@ -88,7 +88,7 @@
                                             <label class="order-form-label" for="date-picker-example">Date Order</label>
                                         </div>
                                         <div class="col-12">
-                                            <input class="order-form-input datepicker" placeholder="Selected date" type="text" id="date-picker-example" required>
+                                            <input class="order-form-input datepicker" placeholder="Selected date" type="text" id="date-picker-example" required name="date">
                                         </div>
                                     </div>
                                     <div class="row mt-3 mx-4">
@@ -96,7 +96,7 @@
                                             <label class="order-form-label">Note</label>
                                         </div>
                                         <div class="col-12">
-                                            <textarea class="form-control" id="note-order" rows="3"></textarea>
+                                            <textarea class="form-control" id="note-order" rows="3" name="note"></textarea>
                                         </div>
                                     </div>
                                     <div class="row mt-3 mx-4">

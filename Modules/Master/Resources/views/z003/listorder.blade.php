@@ -1,7 +1,8 @@
 <div class="card mb-3 ">
     <div class="card-header">
         <i class="fas fa-table"></i>
-        Data Table Example</div>
+        Data Table Example
+    </div>
     <div class="card-body">
         <div class="">
             <div class="container d-flex justify-content-end mt-100">
@@ -12,7 +13,6 @@
                     </div>
                 </div>
             </div>
-
             <br/>
             <div class="row">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -24,14 +24,12 @@
                         <th>Phone</th>
                         <th>Date</th>
                         <th>Quantity</th>
-                        <th>Total</th>
-                        
-                        
+                        <th>Total</th>                       
                         <th>Action</th>
                     </tr>
                     </thead>
                     <tbody>
-                        
+                    <!-- OrderList -->
                     </tbody>
                 </table>
             </div>

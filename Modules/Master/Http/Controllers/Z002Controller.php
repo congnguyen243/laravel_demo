@@ -6,40 +6,37 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use App\Models\Product;
-
+use App\Repositories\Product\ProductRepositoryInterface;
 class Z002Controller extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     * @return Renderable
-     */
+    protected $productRepo;
+
+    public function __construct(ProductRepositoryInterface $productRepo)
+    {
+        $this->productRepo = $productRepo;
+    }
+
     public function index()
     {
         $data = Product::all(); 
         return view('master::z002.index')->with('data',$data);  
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Renderable
-     */
-    public function create(Request $request)
-    {
+    public function create(Request $request){
         $params = $request->all();
-        $product = Product::create(['name'=>$params['name'],
-            'price'=>$params['price'],
-            'memory'=>$params['memory'],
-            'path'=>$params['path'],
-            'stock'=>$params['stock'],
-            'content'=>$params['content']]);
-        $product->save();
+        $this->productRepo->create([
+                    'name'=>$params['name'],
+                    'price'=>$params['price'],
+                    'memory'=>$params['memory'],
+                    'path'=>$params['path'],
+                    'stock'=>$params['stock'],
+                    'content'=>$params['content']]);
         $result = array(
             'status' => '200',
             'data' => $params,
         );
         return response()->json($result);
-    }
-
+    }   
     /**
      * Store a newly created resource in storage.
      * @param Request $request

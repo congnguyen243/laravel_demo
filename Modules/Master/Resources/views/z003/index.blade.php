@@ -36,7 +36,7 @@
             <span class="close">&times;</span>
             <section class="order-form my-1 mx-4">
                 <div class="container pt-4">
-                    <form id="form-order">
+                    <form id="form-order" method="POST">
                         <div class="row">
                             <div class="col-12">
                                 <h1>Create Your Order Form</h1>
@@ -118,7 +118,7 @@
                                     <input type="checkbox" class="mx-2" id="selectAllProduct"><span>Select all</span>
                                 </div>
                                 <div class="col-12" id="wrap_item" style="height:500px; overflow:scroll">
-                                    @foreach($data as $row)
+                                    @foreach($dataProduct as $row)
                                         <div id="item_order" class="d-flex justify-content-between align-items-center mt-3 p-2 items rounded" data-productId="{{$row->id}}">
                                             <div class="d-flex flex-row">
                                                 <input type="checkbox" class="my-3 mx-2 item_check" value="{{$row->price}}">
@@ -128,9 +128,9 @@
                                             <div class="d-flex flex-row align-items-center">
                                                 <!-- <span class="d-block">2</span> -->
                                                 <div class="pl-md-0 pl-2"> <span class="fa fa-minus-square text-secondary"></span><span class="px-md-3 px-1">1</span><span class="fa fa-plus-square text-secondary"></span> </div>
-                                                <span class="d-block ml-5 font-weight-bold">${{$row->price}}</span>
+                                                <span class="d-block ml-5 font-weight-bold">$ {{$row->price}}</span>
                                                 <a href="##">
-                                                <i class="far fa-trash-alt mx-4" ></i>
+                                                <!-- <i class="far fa-trash-alt mx-4" ></i> -->
                                                 </a>
                                             </div>
                                         </div>
@@ -162,7 +162,7 @@
         </div>
 
         <!-- DataTables Example -->
-        <div id="order">
+        <div id="orders">
           @include('master::z003.listorder')
         </div>
         <!-- /dataTables example -->

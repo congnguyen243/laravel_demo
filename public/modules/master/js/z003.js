@@ -4,12 +4,12 @@
 
         var el = {};
 
-        var getAll = function getListContent() {
+        function getListContent() {
             try {
                 var data = {};
                 $.ajax({
                     type: 'POST',
-                    url: '/master/z003/getAll',
+                    url: '/master/z003/getOrders',
                     dataType: 'html',
                     loading: true,
                     data: data,
@@ -26,27 +26,6 @@
             }
         }
     
-        var save = function save(d){
-            try {
-                $.ajax({
-                    type:'post',
-                    url : '/master/z003/create',
-                    dataType: 'json',
-                    loading: true,
-                    data:d,
-                    success: function(res){
-                        console.log(res)
-                        if(res[status]==200){
-                            alert("submit");
-                        }
-                        
-                    }
-                })
-            } catch (e) {
-                alert('' + e.message);
-            }
-        }
-
         this.run = function () {
             this.init();
             this.bindEvents();
@@ -99,6 +78,30 @@
             for(var j=0;j<seItem.length;j++){
             
             }
+
+            //delete order
+            var delOrders = $('.order-delete-btn');
+            for(var i=0 ;i<delOrders.length;i++){
+                delOrders[i].addEventListener('click',function(){
+                    var data ={};
+                    data['id'] = this.dataset.order;
+                    $.ajax({
+                        type:'post',
+                        url : '/master/z003/delete',
+                        dataType: 'json',
+                        loading: true,
+                        data:data,
+                        success: function(res){
+                            switch(res['status']){
+                                case '200':
+                                    getListContent();
+                                    console.log(res['data'])
+                                    break;
+                            }
+                        }
+                    })
+                })
+            }                      
             
             el.btnSubmit1 = $('.btn-submit-info');
             el.btnSubmit2 = $('.btn-submit-voucher');
@@ -299,21 +302,28 @@
 
         var initSubmit = function () {
             el.btnSubmitOrder.on('click', function(){
-                // $('#form-order').on('submit',function(ev){
-                //     ev.preventDefault();
-                // })
-                var data = $('#form-order').serialize();
-                // data['name'] = $('#name-customer').val();
-				// data['phone'] = $('#phone-customer').val();
-				// data['address'] = $('#address-customer').val();
-				// data['email'] = $('#mail-customer').val();
-				// data['date'] = $('#date-picker-example').val();
-				// data['note'] = $('#note-order').val();
-				// data['avatar'] = "test"
-				// data['quantity'] = 1;
-				// data['total'] = 1;
-                console.log("data",data);
-                save(data);
+                $('#form-order').submit(function(ev){
+                    ev.preventDefault();
+                    try {
+                        $.ajax({
+                            type:'post',
+                            url : '/master/z003/create',
+                            dataType: 'json',
+                            loading: true,
+                            data: $('#form-order').serialize(),
+                            success: function(res){
+                                console.log(res)
+                                console.log(res.status=="200");
+                                if(res.status=="200"){
+                                    window.location.reload();
+                                }               
+                            }
+                        })
+                    } catch (e) {
+                        alert('' + e.message);
+                    }
+                })
+                                
             })
         }
     };

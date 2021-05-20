@@ -1,4 +1,4 @@
-<div class="card mb-3 ">
+<div class="card mb-3">
     <div class="card-header">
         <i class="fas fa-table"></i>
         Data Table Example
@@ -30,6 +30,37 @@
                     </thead>
                     <tbody>
                     <!-- OrderList -->
+                        @foreach($dataOrder as $row)
+                            <tr>
+                                <td>
+                                    {{$row->id}}
+                                </td>
+                                <td style="width:80px">
+                                    {{$row->avatar}}
+                                </td>
+                                <td>
+                                    {{$row->name}}
+                                </td>
+                                <td style="width:220px">
+                                    {{$row->phone}}
+                                </td>
+                                <td>
+                                    {{$row->date}}
+                                </td>
+                                <td>
+                                    {{$row->quantity}}
+                                </td>
+                                <td>
+                                    {{$row->total}}
+                                </td>
+                                <td>
+                                    <a data-order="{{$row->id}}" class="btn btn-primary" id="btn-detail-order">View</a> 
+                                    &nbsp; 
+                                    <a data-order="{{$row->id}}"  class="btn-delete btn btn-secondary order-delete-btn" id="btn-delete-order">Delete</a>
+                                </td>
+                            </tr>
+                        @endforeach 
+                    <!-- orderList -->
                     </tbody>
                 </table>
             </div>

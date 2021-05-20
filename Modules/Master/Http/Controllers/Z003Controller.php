@@ -27,8 +27,9 @@ class Z003Controller extends Controller
      */
     public function index()
     {
-        $product = $this->productRepo->getProduct();
-        return view('master::z003.index')->with('data',$product);
+        $products = $this->productRepo->getProduct();
+        $orders = $this->orderRepo->getAll();
+        return view('master::z003.index')->with('dataProduct',$products)->with('dataOrder',$orders);
     }
 
     /**
@@ -109,8 +110,29 @@ class Z003Controller extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $idOrder = $request['id'];
+        $flag = $this->orderRepo->delete($idOrder);
+        $result = array(
+            'status' => '200',
+            'data' => $flag,
+        );
+        return response()->json($result);
     }
+    
+    public function getAll(Request $request){
+        $data = $this->orderRepo->getAll();
+
+        if($request->ajax()){
+            return view('master::z003.listorder')->with('dataOrder',$data);
+        }
+        return $data;
+    }
+
+    public function getAllSpring(Request $request){
+        $data = $this->orderRepo->getAll();
+        return $data;
+    }
+
 }

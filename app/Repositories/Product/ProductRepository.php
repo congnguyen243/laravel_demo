@@ -15,6 +15,6 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
 
     public function getProduct()
     {
-        return $this->model->select('name')->take(3)->get();
+        return $this->model->select('name')->take(4)->get();
     }
 }

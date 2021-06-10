@@ -56,7 +56,7 @@
                                 <td>
                                     <a data-order="{{$row->id}}" class="btn btn-primary" id="btn-detail-order">View</a> 
                                     &nbsp; 
-                                    <a data-order="{{$row->id}}"  class="btn-delete btn btn-secondary order-delete-btn" id="btn-delete-order">Delete</a>
+                                    <a data-order="{{$row->id}}"  class="btn-delete btn btn-secondary order-delete-btn" id="btn-delete-order" data-confirm="Are you sure to delete this item?">Delete</a>
                                 </td>
                             </tr>
                         @endforeach 

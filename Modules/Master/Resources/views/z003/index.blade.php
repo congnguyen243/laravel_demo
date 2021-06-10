@@ -17,6 +17,7 @@
             }
         });
     </script>
+    <script src="//cdn.ckeditor.com/4.16.1/basic/ckeditor.js"></script>
     <script type="text/javascript" src="/modules/master/js/z003.js"></script>
 @endsection
 @section('content')
@@ -35,8 +36,9 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <section class="order-form my-1 mx-4">
-                <div class="container pt-4">
-                    <form id="form-order" method="POST">
+                <div class="container">
+                    <form id="form-order" method="POST" enctype="multipart/form-data">
+                        @csrf
                         <div class="row">
                             <div class="col-12">
                                 <h1>Create Your Order Form</h1>
@@ -117,17 +119,31 @@
                                 <div class="col-12">
                                     <input type="checkbox" class="mx-2" id="selectAllProduct"><span>Select all</span>
                                 </div>
-                                <div class="col-12" id="wrap_item" style="height:500px; overflow:scroll">
+                                <div class="col-12" id="wrap_item" style="height:500px; overflow:auto">
                                     @foreach($dataProduct as $row)
                                         <div id="item_order" class="d-flex justify-content-between align-items-center mt-3 p-2 items rounded" data-productId="{{$row->id}}">
-                                            <div class="d-flex flex-row">
+                                            <div class="col-6 d-flex flex-row">
                                                 <input type="checkbox" class="my-3 mx-2 item_check" value="{{$row->price}}">
                                                 <img data-productImg="{{$row->path}}" class="rounded" src="https://i.imgur.com/QRwjbm5.jpg" width="40">
-                                                <div class="ml-2"><span class="font-weight-bold d-block" id="product_content">{{$row->name}}</span><span class="spec">{{$row->memory}}GB, Navy Blue</span></div>
+                                                <div class="ml-2"><span class="font-weight-bold d-block" id="product_content">{{$row->name}}</span><span class="spec">{{$row->memory}} GB</span></div>
                                             </div>
-                                            <div class="d-flex flex-row align-items-center">
+                                            <div class="col-6 d-flex flex-row align-items-center">
                                                 <!-- <span class="d-block">2</span> -->
-                                                <div class="pl-md-0 pl-2"> <span class="fa fa-minus-square text-secondary"></span><span class="px-md-3 px-1">1</span><span class="fa fa-plus-square text-secondary"></span> </div>
+                                                <div class="pl-md-0 pl-2"> 
+                                                    <!-- <span class="fa fa-minus-square text-secondary"></span> -->
+                                                    <div class="form-outline">
+                                                        <label class="form-label" for="typeNumber" >Quantity </label>
+                                                        <input style="width: 70px;"
+                                                                type="number"
+                                                                id="typeNumber"
+                                                                class="form-control"
+                                                                value="1"
+                                                                min="1"
+                                                                />
+                                                    </div>
+                                                    <!-- <input class="form-control" type="number" min="1" style="width:30px"></input> -->
+                                                    <!-- <span class="fa fa-plus-square text-secondary"></span>  -->
+                                                </div>
                                                 <span class="d-block ml-5 font-weight-bold">$ {{$row->price}}</span>
                                                 <a href="##">
                                                 <!-- <i class="far fa-trash-alt mx-4" ></i> -->
@@ -141,13 +157,13 @@
                                     <div class="order_total">
                                         <div class="order_total_content text-md-right">
                                             <div class="order_total_title">Order Total:</div>
-                                            <div id="order_total_amount">$ <span>100</span></div>
+                                            <div id="order_total_amount">$ <span>0</span></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12">
-                                <button type="submit" id="btn-submit-order" class="btn btn-dark d-block mx-auto btn-submit">Submit</button>
+                                <button type="submit" id="btn-submit-order" class="btn btn-dark d-block mx-auto btn-submit">Save</button>
                             </div>
                         </div>
                     </form>
@@ -157,8 +173,6 @@
         </div>
         <div class="btns my-3">
             <button type="button" class="btn btn-success " id="new-order-btn" >New Order</button>
-            <button type="button" class="btn btn-primary d-none" id="btn-update-product" >Update</button>
-            <button type="button" class="btn btn-secondary mx-2" id="btn-cancel-product" >Cancel</button>
         </div>
 
         <!-- DataTables Example -->

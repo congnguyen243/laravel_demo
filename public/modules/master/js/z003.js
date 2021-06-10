@@ -83,26 +83,31 @@
             var delOrders = $('.order-delete-btn');
             for(var i=0 ;i<delOrders.length;i++){
                 delOrders[i].addEventListener('click',function(){
-                    var data ={};
-                    data['id'] = this.dataset.order;
-                    $.ajax({
-                        type:'post',
-                        url : '/master/z003/delete',
-                        dataType: 'json',
-                        loading: true,
-                        data:data,
-                        success: function(res){
-                            switch(res['status']){
-                                case '200':
-                                    getListContent();
-                                    console.log(res['data'])
-                                    break;
+                    var choice = confirm(this.getAttribute('data-confirm'));
+                    if (choice) {
+                        var data ={};
+                        data['id'] = this.dataset.order;
+                        $.ajax({
+                            type:'post',
+                            url : '/master/z003/delete',
+                            dataType: 'json',
+                            loading: true,
+                            data:data,
+                            success: function(res){
+                                switch(res['status']){
+                                    case '200':
+                                        getListContent();
+                                        console.log(res['data'])
+                                        break;
+                                }
                             }
-                        }
-                    })
+                        })
+                    }
                 })
             }                      
-            
+            //ckeditor
+            CKEDITOR.replace('note-order');
+
             el.btnSubmit1 = $('.btn-submit-info');
             el.btnSubmit2 = $('.btn-submit-voucher');
             el.btnSubmitOrder = $('#form-order #btn-submit-order');

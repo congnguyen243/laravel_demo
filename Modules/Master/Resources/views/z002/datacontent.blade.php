@@ -45,7 +45,7 @@
                         <td>
                         <a data-product="{{$row->id}}" class=" btn btn-primary" id="btn-edit-product">Edit</a> 
                         &nbsp; 
-                        <a   data-product="{{$row->id}}" class="btn-delete btn btn-secondary" id="btn-delete-product">Delete</a></td>
+                        <a data-product="{{$row->id}}" class="btn-delete btn btn-secondary" id="btn-delete-product">Delete</a></td>
                     </tr>
                 @endforeach  
             <!-- <tr>

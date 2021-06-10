@@ -27,9 +27,9 @@ class Z003Controller extends Controller
      */
     public function index()
     {
-        $products = $this->productRepo->getProduct();
+        $products = $this->productRepo->getAll();
         $orders = $this->orderRepo->getAll();
-        return view('master::z003.index')->with('dataProduct',$products)->with('dataOrder',$orders);
+        return view('master::z003.index')->with('dataProduct', $products)->with('dataOrder', $orders);
     }
 
     /**
@@ -130,9 +130,43 @@ class Z003Controller extends Controller
         return $data;
     }
 
+    //service for spring
     public function getAllSpring(Request $request){
         $data = $this->orderRepo->getAll();
         return $data;
     }
 
+    public function createSpring(Request $request)
+    {
+        
+        $params = $request->all();
+        var_dump($params);
+        $order= $this->orderRepo->create([
+            'name'=>$params['name'],
+            'phone'=>$params['phone'],
+            'avatar'=>"",
+            'address'=>$params['address'],
+            'email'=>$params['email'],
+            'date'=>$params['date'],
+            'quantity'=>$params['quantity'],
+            'total'=>$params['total'],
+            'note'=>$params['note']
+        ]);
+        $result = array(
+            'status' => '200',
+            'data' => $order,
+        );
+        return response()->json($result);
+    }
+
+    public function deleteSpring(Request $request)
+    {
+        $idOrder = $request['id'];
+        $flag = $this->orderRepo->delete($idOrder);
+        $result = array(
+            'status' => '200',
+            'data' => $flag,
+        );
+        return response()->json($result);
+    }
 }

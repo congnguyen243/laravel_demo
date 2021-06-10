@@ -70,15 +70,11 @@
             //selectAll
             seAll.click(function(){
                 if(seAll.is(":checked")){
-                    $('.item_check').prop('checked', true);
+                    $('.item-check').prop('checked', true);
                 }
-                else $('.item_check').prop('checked', false);
+                else $('.item-check').prop('checked', false);
             })
-            //calc total amount
-            for(var j=0;j<seItem.length;j++){
-            
-            }
-
+           
             //delete order
             var delOrders = $('.order-delete-btn');
             for(var i=0 ;i<delOrders.length;i++){
@@ -107,6 +103,27 @@
             }                      
             //ckeditor
             CKEDITOR.replace('note-order');
+
+            $('.item-check, .quantity-product, #selectAllProduct').on('keypress change', function(e){
+                update_amount();
+            })
+
+            function update_amount() {
+                var sum = 0;
+                $('.item_order').each(function(){
+                    var checkboxItem =  $(this).find('.item-check');
+                    var isChecked = checkboxItem.is(':checked');
+                    if(isChecked){
+                        var quantity = $(this).find('.quantity-product');
+                        quantity.attr("disabled", false);
+                        var price = $(this).find('.item-check').val();
+                        var qty = quantity.val();
+                        console.log(qty,price);
+                        sum += price*qty;
+                    }  
+                })
+                $('#order_total_amount').text("$ "+sum);
+            }
 
             el.btnSubmit1 = $('.btn-submit-info');
             el.btnSubmit2 = $('.btn-submit-voucher');

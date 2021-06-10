@@ -17,7 +17,7 @@
             }
         });
     </script>
-    <script src="//cdn.ckeditor.com/4.16.1/basic/ckeditor.js"></script>
+    <script src="//cdn.ckeditor.com/4.16.1/basic/ckeditor.js"></script>    
     <script type="text/javascript" src="/modules/master/js/z003.js"></script>
 @endsection
 @section('content')
@@ -121,9 +121,9 @@
                                 </div>
                                 <div class="col-12" id="wrap_item" style="height:500px; overflow:auto">
                                     @foreach($dataProduct as $row)
-                                        <div id="item_order" class="d-flex justify-content-between align-items-center mt-3 p-2 items rounded" data-productId="{{$row->id}}">
+                                        <div class="d-flex justify-content-between align-items-center mt-3 p-2 items rounded item_order">
                                             <div class="col-6 d-flex flex-row">
-                                                <input type="checkbox" class="my-3 mx-2 item_check" value="{{$row->price}}">
+                                                <input type="checkbox" class="my-3 mx-2 item-check" value="{{$row->price}}">
                                                 <img data-productImg="{{$row->path}}" class="rounded" src="https://i.imgur.com/QRwjbm5.jpg" width="40">
                                                 <div class="ml-2"><span class="font-weight-bold d-block" id="product_content">{{$row->name}}</span><span class="spec">{{$row->memory}} GB</span></div>
                                             </div>
@@ -132,19 +132,20 @@
                                                 <div class="pl-md-0 pl-2"> 
                                                     <!-- <span class="fa fa-minus-square text-secondary"></span> -->
                                                     <div class="form-outline">
-                                                        <label class="form-label" for="typeNumber" >Quantity </label>
-                                                        <input style="width: 70px;"
+                                                        <label class="form-label" for="quantity-product" >Quantity </label>
+                                                        <input
+                                                                disabled
+                                                                style="width: 70px;"
                                                                 type="number"
-                                                                id="typeNumber"
-                                                                class="form-control"
-                                                                value="1"
+                                                                class="form-control quantity-product"
+                                                                value="0"
                                                                 min="1"
                                                                 />
                                                     </div>
                                                     <!-- <input class="form-control" type="number" min="1" style="width:30px"></input> -->
                                                     <!-- <span class="fa fa-plus-square text-secondary"></span>  -->
                                                 </div>
-                                                <span class="d-block ml-5 font-weight-bold">$ {{$row->price}}</span>
+                                                <span class="d-block ml-5 font-weight-bold item-price">$ {{$row->price}}</span>
                                                 <a href="##">
                                                 <!-- <i class="far fa-trash-alt mx-4" ></i> -->
                                                 </a>

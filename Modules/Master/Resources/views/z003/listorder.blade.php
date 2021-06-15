@@ -36,6 +36,7 @@
                                     {{$row->id}}
                                 </td>
                                 <td style="width:80px">
+                                    <img src="{{ asset('/storage/'.$row->avatar) }}" style="width: 100px; height: 100px; object-fit: cover;">
                                     {{$row->avatar}}
                                 </td>
                                 <td>

@@ -19,6 +19,7 @@
                     },
                     // Ajax error
                     error: function (res) {
+
                     }
                 });
             } catch (e) {
@@ -106,9 +107,11 @@
 
             $('.item-check, .quantity-product, #selectAllProduct').on('keypress change', function(e){
                 update_amount();
+                updateInputQtyTotal();
             })
 
             function update_amount() {
+                var total_quantity = 0;
                 var sum = 0;
                 $('.item_order').each(function(){
                     var checkboxItem =  $(this).find('.item-check');
@@ -120,14 +123,24 @@
                         var qty = quantity.val();
                         console.log(qty,price);
                         sum += price*qty;
+                        total_quantity += 1*qty;
                     }  
                 })
-                $('#order_total_amount').text("$ "+sum);
+                $("#total-quantity").text(total_quantity);
+                $('#order_total_amount').text(sum);
             }
 
+            function updateInputQtyTotal(){
+                $("#date-quantity-order").val($("#total-quantity").text());
+                $("#date-total-order").val($("#order_total_amount").text());
+            }
+            updateInputQtyTotal();
             el.btnSubmit1 = $('.btn-submit-info');
             el.btnSubmit2 = $('.btn-submit-voucher');
             el.btnSubmitOrder = $('#form-order #btn-submit-order');
+            //show error toast
+            $(".toast").toast('show');
+
         };
 
         this.bindEvents = function () {
@@ -256,7 +269,7 @@
                 });
             }
         }
-
+        
         var initWheel = function () {
             let theWheel = new Winwheel({
                 'numSegments'       : 12,
@@ -321,32 +334,38 @@
                 });
             }
         };
-
+        
+        //create order
         var initSubmit = function () {
-            el.btnSubmitOrder.on('click', function(){
-                $('#form-order').submit(function(ev){
-                    ev.preventDefault();
-                    try {
-                        $.ajax({
-                            type:'post',
-                            url : '/master/z003/create',
-                            dataType: 'json',
-                            loading: true,
-                            data: $('#form-order').serialize(),
-                            success: function(res){
-                                console.log(res)
-                                console.log(res.status=="200");
-                                if(res.status=="200"){
-                                    window.location.reload();
-                                }               
-                            }
-                        })
-                    } catch (e) {
-                        alert('' + e.message);
-                    }
-                })
+            // el.btnSubmitOrder.on('click', function(){
+            //     $('#form-order').submit(function(ev){
+            //         ev.preventDefault();
+            //         try {
+            //             $.ajax({
+            //                 type:'post',
+            //                 url : '/master/z003/create',
+            //                 dataType: 'json',
+            //                 loading: true,
+            //                 data: $('#form-order').serialize(),
+            //                 success: function(res){
+            //                     if(res.status=="200"){
+            //                         console.log(res)
+            //                         console.log(res.status=="200");
+            //                         $('.modal').css("display", "block");   
+            //                     }        
+            //                 }, 
+            //                 error: function(res) {
+            //                     console.log(res.responseJSON.errors);
+            //                     $("#error-name").css("display", "block");
+            //                     $("#error-response").text(res.responseJSON.errors);
+            //                 }
+            //             })
+            //         } catch (e) {
+            //             alert('' + e.message);
+            //         }
+            //     })
                                 
-            })
+            // })
         }
     };
 

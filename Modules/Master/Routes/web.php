@@ -29,12 +29,12 @@ Route::prefix('master')->group(function() {
 
     //z003
     Route::get('z003', 'Z003Controller@index');
-    Route::get('z003/getOrders', 'Z003Controller@getAll')->middleware('cors');
-    Route::post('z003/getOrders', 'Z003Controller@getAll')->middleware('cors');
+    Route::get('z003/getOrders', 'Z003Controller@getAll');
+    Route::post('z003/getOrders', 'Z003Controller@getAll');
     Route::post('z003/create', 'Z003Controller@create');
     Route::post('z003/delete', 'Z003Controller@destroy');
     Route::get('api/v1/getOrders', 'Z003Controller@getAllSpring');
-    Route::post('api/v1/getOrders', 'Z003Controller@getAllSpring')->middleware('cors');
+    Route::post('api/v1/getOrders', 'Z003Controller@getAllSpring');
     Route::post('api/v1/createOrder', 'Z003Controller@createSpring');
     Route::post('api/v1/deleteOrder', 'Z003Controller@deleteSpring');
 

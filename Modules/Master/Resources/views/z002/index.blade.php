@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('title')
-    Product List
+Product List
 @endsection
 @section('stylesheet')
     <!-- <link rel="stylesheet" href="/modules/master/css/z002.css?<?php echo time();?>"> -->

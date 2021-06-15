@@ -4,6 +4,7 @@ namespace Modules\Master\Http\Controllers;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Routing\Controller;
 use App\Models\Product;
 use App\Models\Order;
@@ -40,30 +41,42 @@ class Z003Controller extends Controller
     {
         $params = $request->all();
         $validated = $request->validate([
-            'name' => 'required',
-            'phone' => 'required|numeric',
-            'address' => 'required',
-            'date' => 'required',
+            'name' => 'required|string|max:25',
+            'phone' => 'required|digits:10',
+            'address' => 'required|max:100',
+            'date' => 'required|date|before_or_equal:today',
             'email' => 'required|email',
+            'total' => 'required|numeric|min:1',
+            'quantity' => 'required|numeric|min:1',
+            'avatar' => 'image|mimes:jpeg,png|mimetypes:image/jpeg,image/png|max:448'
         ]);
+        $path = $request->file('avatar')->storeAs(
+            'imgs', $request->file('avatar')->getClientOriginalName(),'public'
+        );
+        // $url = Storage::url($path);
         $order= $this->orderRepo->create([
             'name'=>$params['name'],
             'phone'=>$params['phone'],
-            'avatar'=>"",
+            'avatar'=>$path,
             'address'=>$params['address'],
             'email'=>$params['email'],
             'date'=>$params['date'],
-            'quantity'=>1,
-            'total'=>1,
+            'quantity'=>$params['quantity'],
+            'total'=>$params['total'],
             'note'=>$params['note']
         ]);
         $result = array(
             'status' => '200',
             'data' => $order,
-        );
+        );    
+          
         return response()->json($result);
     }
 
+    // private function uploadFile($filename){
+    //     $path = $request->file($filename)->store('img');
+    //     return $path;
+    // }
     /**
      * Store a newly created resource in storage.
      * @param Request $request

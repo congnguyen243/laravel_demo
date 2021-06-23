@@ -38,9 +38,11 @@
             <span class="close">&times;</span>
             <section class="order-form my-1 mx-4">
                 <div class="container">
-
+                    
+                    <ul id="noti_err" style="position: absolute; right: 10px; top: 20px; z-index: 2;">
+                    </ul>
                     <!-- error invalid form -->
-                    @if ($errors->any())
+                    <!-- @if ($errors->any())
                         <ul style="position: absolute; right: 10px; top: 20px; z-index: 2;">
                             @foreach ($errors->all() as $error)
                             <div role="alert" aria-live="assertive" aria-atomic="true" class="toast" data-autohide="true"  data-delay="0" style="">
@@ -57,9 +59,9 @@
                             </div>
                             @endforeach
                         </ul>
-                    @endif 
+                    @endif  -->
 
-                    <form id="form-order" method="POST" enctype="multipart/form-data" action="/master/z003/create">
+                    <form id="form-order" enctype="multipart/form-data" method="post" action="/master/z003/create">
                         @csrf                        
                         <div class="row">
                             <div class="col-12">
@@ -80,7 +82,7 @@
                                             <!-- <p class="help is-danger alert alert-danger" role="alert" id="error-name">{{ $errors->first('name') }}</p> -->
                                         </div>
                                         <div class="col-12 col-sm-6 mt-2 mt-sm-0">
-                                            <input class="order-form-input" type="file" name="avatar" value="{{ old('avatar') }}" >
+                                            <input class="order-form-input" type="file" name="avatar" id="file-avatar" >
                                         </div>
                                     </div>
                                     <div class="row mt-3 mx-4">
@@ -126,8 +128,8 @@
                                     </div>
                                     <div class="row mt-3 mx-4">
                                         <div class="col-12">
-                                            <input class="order-form-input" type="number" id="date-quantity-order" name="quantity" >
-                                            <input class="order-form-input" type="number" id="date-total-order" name="total" >
+                                            <input class="order-form-input" type="hidden" id="date-quantity-order" name="quantity" >
+                                            <input class="order-form-input" type="hidden" id="date-total-order" name="total" >
                                         </div>
                                     </div>
                                     <div class="row mt-3 mx-4">
@@ -153,7 +155,7 @@
                                         <div class="d-flex justify-content-between align-items-center mt-3 p-2 items rounded item_order">
                                             <div class="col-6 d-flex flex-row">
                                                 <input type="checkbox" class="my-3 mx-2 item-check" value="{{$row->price}}">
-                                                <img data-productImg="{{$row->path}}" class="rounded" src="https://i.imgur.com/QRwjbm5.jpg" width="40">
+                                                <img alt="img" class="rounded" src="{{ asset($row->path) }}" width="40">
                                                 <div class="ml-2"><span class="font-weight-bold d-block" id="product_content">{{$row->name}}</span><span class="spec">{{$row->memory}} GB</span></div>
                                             </div>
                                             <div class="col-6 d-flex flex-row align-items-center">
@@ -163,6 +165,7 @@
                                                     <div class="form-outline">
                                                         <label class="form-label" for="quantity-product" >Quantity </label>
                                                         <input
+                                                                name="item[{{$row->id}}]"
                                                                 disabled
                                                                 style="width: 70px;"
                                                                 type="number"

@@ -25,9 +25,9 @@
                             {{$row->id}}
                         </td>
                         <td style="width:80px">
-                            {{$row->path}}
+                            <img src="{{ asset($row->path) }}" style="width: 60px; height: 100px; object-fit: cover;">
                         </td>
-                        <td>
+                        <td style="width:220px">
                             {{$row->name}}
                         </td>
                         <td style="width:220px">
@@ -42,7 +42,7 @@
                         <td>
                             {{$row->stock}}
                         </td>
-                        <td>
+                        <td style="width:160px">
                         <a data-product="{{$row->id}}" class=" btn btn-primary" id="btn-edit-product">Edit</a> 
                         &nbsp; 
                         <a data-product="{{$row->id}}" class="btn-delete btn btn-secondary" id="btn-delete-product">Delete</a></td>

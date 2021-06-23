@@ -40,6 +40,10 @@ class Z003Controller extends Controller
     public function create(Request $request)
     {
         $params = $request->all();
+        // dd($params);
+        // var_dump($params);
+        $items = $request['item'];
+        // var_dump($params);die();
         $validated = $request->validate([
             'name' => 'required|string|max:25',
             'phone' => 'required|digits:10',
@@ -48,29 +52,24 @@ class Z003Controller extends Controller
             'email' => 'required|email',
             'total' => 'required|numeric|min:1',
             'quantity' => 'required|numeric|min:1',
-            'avatar' => 'image|mimes:jpeg,png|mimetypes:image/jpeg,image/png|max:448'
+            'avatar' => 'image|mimes:jpeg,png|mimetypes:image/jpeg,image/png|max:448',
+            'note' => 'max:100'
         ]);
-        $path = $request->file('avatar')->storeAs(
-            'imgs', $request->file('avatar')->getClientOriginalName(),'public'
-        );
-        // $url = Storage::url($path);
-        $order= $this->orderRepo->create([
-            'name'=>$params['name'],
-            'phone'=>$params['phone'],
-            'avatar'=>$path,
-            'address'=>$params['address'],
-            'email'=>$params['email'],
-            'date'=>$params['date'],
-            'quantity'=>$params['quantity'],
-            'total'=>$params['total'],
-            'note'=>$params['note']
-        ]);
+
+        if($request->hasFile('avatar')){  
+            $path = $request->file('avatar')->storeAs(
+                'imgs', $request->file('avatar')->getClientOriginalName(),'public'
+            );  
+            $params['avatar']=$path;
+        }
+        $order= $this->orderRepo->storeOrder($params,$items);
         $result = array(
             'status' => '200',
-            'data' => $order,
-        );    
-          
+            'data' => $params
+        );
+
         return response()->json($result);
+      
     }
 
     // private function uploadFile($filename){

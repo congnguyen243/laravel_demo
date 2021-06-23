@@ -22,7 +22,7 @@ class CreateOrdersTable extends Migration
             $table->string('email')->nullable();;
             $table->date('date');
             $table->integer('quantity');
-            $table->float('total', 8, 2);
+            $table->float('total', 25, 2);
             $table->string('note')->nullable();
         });
     }

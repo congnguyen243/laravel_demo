@@ -63,7 +63,7 @@
             
             //init
             var seAll = $('#selectAllProduct');
-            console.log($('#selectAllProduct'))
+            // console.log($('#selectAllProduct'))
             
             var seItem = $('.item_check');
             seItem.prop('checked', false);
@@ -134,7 +134,9 @@
                 $("#date-quantity-order").val($("#total-quantity").text());
                 $("#date-total-order").val($("#order_total_amount").text());
             }
+
             updateInputQtyTotal();
+
             el.btnSubmit1 = $('.btn-submit-info');
             el.btnSubmit2 = $('.btn-submit-voucher');
             el.btnSubmitOrder = $('#form-order #btn-submit-order');
@@ -334,38 +336,62 @@
                 });
             }
         };
-        
+
         //create order
         var initSubmit = function () {
-            // el.btnSubmitOrder.on('click', function(){
-            //     $('#form-order').submit(function(ev){
-            //         ev.preventDefault();
-            //         try {
-            //             $.ajax({
-            //                 type:'post',
-            //                 url : '/master/z003/create',
-            //                 dataType: 'json',
-            //                 loading: true,
-            //                 data: $('#form-order').serialize(),
-            //                 success: function(res){
-            //                     if(res.status=="200"){
-            //                         console.log(res)
-            //                         console.log(res.status=="200");
-            //                         $('.modal').css("display", "block");   
-            //                     }        
-            //                 }, 
-            //                 error: function(res) {
-            //                     console.log(res.responseJSON.errors);
-            //                     $("#error-name").css("display", "block");
-            //                     $("#error-response").text(res.responseJSON.errors);
-            //                 }
-            //             })
-            //         } catch (e) {
-            //             alert('' + e.message);
-            //         }
-            //     })
-                                
-            // })
+            $('#form-order').submit(function(event){
+                event.preventDefault();
+                var formData = new FormData(this);
+                console.log('formData'+formData);
+                console.log('test',$('#file-avatar').prop("files")[0]);
+                var file_avatar = $('#file-avatar').prop("files")[0];
+                if(file_avatar != undefined){
+                    formData.append('avatar', file_avatar);
+                }
+                
+                try {
+                    $.ajax({
+                        type:'post',
+                        url:'/master/z003/create',
+                        dataType:'json',
+                        contentType: false,
+                        processData: false,
+                        loading: true,
+                        data: formData,
+                        success: function(res){
+                            alert("Created order")
+                            getListContent();
+                            $('.modal').css("display", "none");          
+                        }, 
+                        error: function(res) {
+                            $("#noti_err").empty();
+                            var er =  res.responseJSON.errors;
+                            for (const property in er) {
+                                $("#noti_err").append(`
+                                <div role="alert" aria-live="assertive" aria-atomic="true" class="toast" data-autohide="true"  data-delay="0" style="">
+                                        <div class="toast-header">
+                                            <strong class="mr-auto">Error</strong>
+                                            <small><?php echo " " . date("h:i:sa"); ?></small>
+                                            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="toast-body">
+                                            ${property}  ${er[property]}
+                                        </div>
+                                    </div>`
+                                    )
+                            }
+                            $(".toast").toast('show');
+                        }
+                    })
+                } catch (e) {
+                    alert('' + e.message);
+                }
+            });
+            // console.log($('#form-order').serialize());            
+            // console.log('test2',$('#file-avatar'))
+
         }
     };
 

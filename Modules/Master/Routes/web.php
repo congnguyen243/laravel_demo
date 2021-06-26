@@ -33,6 +33,8 @@ Route::prefix('master')->group(function() {
     Route::post('z003/getOrders', 'Z003Controller@getAll');
     Route::post('z003/create', 'Z003Controller@create');
     Route::post('z003/delete', 'Z003Controller@destroy');
+    Route::post('z003/show', 'Z003Controller@show');
+    Route::post('z003/update', 'Z003Controller@update');
     Route::get('api/v1/getOrders', 'Z003Controller@getAllSpring');
     Route::post('api/v1/getOrders', 'Z003Controller@getAllSpring');
     Route::post('api/v1/createOrder', 'Z003Controller@createSpring');

@@ -37,7 +37,6 @@
             </div>
         </div>
     </main>
-
     @yield('page_javascript')
 		<!-- /form's  Jquery files -->
   

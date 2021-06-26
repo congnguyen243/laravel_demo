@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Routing\Controller;
 use App\Models\Product;
 use App\Models\Order;
+use App\Models\ProductOrder;
 use App\Repositories\Product\ProductRepositoryInterface;
 use App\Repositories\Order\OrderRepositoryInterface;
 
@@ -15,11 +16,13 @@ class Z003Controller extends Controller
 {
     protected $productRepo;
     protected $orderRepo;
+    protected $productOrder;
 
     public function __construct(ProductRepositoryInterface  $productRepo, OrderRepositoryInterface $orderRepo)
     {
         $this->productRepo = $productRepo;
         $this->orderRepo = $orderRepo;
+        $this->productOrder = new ProductOrder();
     }
 
     /**
@@ -40,10 +43,8 @@ class Z003Controller extends Controller
     public function create(Request $request)
     {
         $params = $request->all();
-        // dd($params);
-        // var_dump($params);
         $items = $request['item'];
-        // var_dump($params);die();
+
         $validated = $request->validate([
             'name' => 'required|string|max:25',
             'phone' => 'required|digits:10',
@@ -69,13 +70,8 @@ class Z003Controller extends Controller
         );
 
         return response()->json($result);
-      
     }
 
-    // private function uploadFile($filename){
-    //     $path = $request->file($filename)->store('img');
-    //     return $path;
-    // }
     /**
      * Store a newly created resource in storage.
      * @param Request $request
@@ -91,9 +87,18 @@ class Z003Controller extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        return view('master::show');
+        $id = $request['id'];
+        $order= $this->orderRepo->find($id);
+        $productOrder = $this->productOrder->getProductsOfOrder($id);
+        $products = $this->productRepo->getAll();
+        $result = array(
+            'order'=>$order,
+            'productOrder'=>$productOrder,
+            'products'=>$products
+        );
+        return response()->json($result);
     }
 
     /**
@@ -112,9 +117,35 @@ class Z003Controller extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $params = $request->all();
+        $items = $request['item'];
+        $validated = $request->validate([
+            'name' => 'required|string|max:25',
+            'phone' => 'required|digits:10',
+            'address' => 'required|max:100',
+            'date' => 'required|date|before_or_equal:today',
+            'email' => 'required|email',
+            'total' => 'required|numeric|min:1',
+            'quantity' => 'required|numeric|min:1',
+            'avatar' => 'image|mimes:jpeg,png|mimetypes:image/jpeg,image/png|max:448',
+            'note' => 'max:100'
+        ]);
+        $this->orderRepo->delete($params['id']);
+        if($request->hasFile('avatar')){  
+            $path = $request->file('avatar')->storeAs(
+                'imgs', $request->file('avatar')->getClientOriginalName(),'public'
+            );  
+            $params['avatar']=$path;
+        }
+        $order= $this->orderRepo->storeOrder($params,$items);
+        $result = array(
+            'status' => '200',
+            'data' => $params
+        );
+
+        return response()->json($result);
     }
 
     /**

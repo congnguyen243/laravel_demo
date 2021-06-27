@@ -19,6 +19,7 @@
         });
     </script>
     <script src="//cdn.ckeditor.com/4.16.1/basic/ckeditor.js"></script>    
+    <script src="//cdn.ckeditor.com/4.16.1/basic/adapters/jquery.js"></script>
     <script type="text/javascript" src="/modules/master/js/z003.js"></script>
     <script type="text/javascript" src="/modules/master/js/z003-edit.js"></script>
 @endsection
@@ -133,7 +134,7 @@
                                     </div>  
                                     <div class="col-12" id="wrap_item" style="height:500px; overflow:auto">
                                         @foreach($dataProduct as $row)
-                                            <div class="d-flex justify-content-between align-items-center mt-3 p-2 items rounded item_order">
+                                            <div class="d-flex justify-content-between align-items-center mt-3 p-2 rounded item_order">
                                                 <div class="col-6 d-flex flex-row">
                                                     <input type="checkbox" class="my-3 mx-2 item-check" value="{{$row->price}}">
                                                     <img alt="img" class="rounded" src="{{ asset($row->path) }}" width="40">

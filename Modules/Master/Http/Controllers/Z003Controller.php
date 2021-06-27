@@ -54,7 +54,7 @@ class Z003Controller extends Controller
             'total' => 'required|numeric|min:1',
             'quantity' => 'required|numeric|min:1',
             'avatar' => 'image|mimes:jpeg,png|mimetypes:image/jpeg,image/png|max:448',
-            'note' => 'max:100'
+            'note' => 'max:300'
         ]);
 
         if($request->hasFile('avatar')){  
@@ -130,16 +130,18 @@ class Z003Controller extends Controller
             'total' => 'required|numeric|min:1',
             'quantity' => 'required|numeric|min:1',
             'avatar' => 'image|mimes:jpeg,png|mimetypes:image/jpeg,image/png|max:448',
-            'note' => 'max:100'
+            'note' => 'max:300'
         ]);
-        $this->orderRepo->delete($params['id']);
+        
+        // $this->orderRepo->delete($params['id']);
         if($request->hasFile('avatar')){  
             $path = $request->file('avatar')->storeAs(
                 'imgs', $request->file('avatar')->getClientOriginalName(),'public'
             );  
             $params['avatar']=$path;
         }
-        $order= $this->orderRepo->storeOrder($params,$items);
+        // $order= $this->orderRepo->storeOrder($params,$items);
+        $this->orderRepo->updateOrder($params,$items);
         $result = array(
             'status' => '200',
             'data' => $params

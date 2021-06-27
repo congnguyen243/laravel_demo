@@ -73,7 +73,7 @@
                                 <section class="order-edit-form my-1 mx-4">
                                     <div class="container">
                                     <ul id="update_noti_err" style="position: absolute; right: 10px; top: 20px; z-index: 2;"></ul>
-                                        
+
                                         <form enctype="multipart/form-data" method="post" action="" id="order-show">
                                             @csrf                        
                                             <div class="row">

@@ -9,9 +9,9 @@
         };
 
         this.init = function () {
-            
-            CKEDITOR.replace('edit-order-note');
-            var editor = CKEDITOR.instances['edit-order-note'];
+            var editor = $( '#edit-order-note' ).ckeditor();
+            // CKEDITOR.replace('edit-order-note');
+            // var editor = CKEDITOR.instances['edit-order-note'];
             //edit order
             function editOrder() {
                 $('.edit-order-btn').show();
@@ -42,9 +42,8 @@
             }
 
             function fillPro(item, qty,isSelect) {
-                $('#products-list').append(
-                    `
-                    <div class="d-flex justify-content-between align-items-center mt-3 p-2 rounded item-order-edit">
+                $('#products-list')
+                    .append(`<div class="d-flex justify-content-between align-items-center mt-3 p-2 rounded item-order-edit">
                         <div class="col-6 d-flex flex-row">
                             <input type="checkbox" class="my-3 mx-2 item-check-edit-order" ${isSelect} value=${item['price']}>
                             <img alt="img" class="rounded"  width="40">
@@ -56,28 +55,25 @@
                                 <!-- <span class="fa fa-minus-square text-secondary"></span> -->
                                 <div class="form-outline">
                                     <label class="form-label" for="quantity-product" >Quantity </label>
-                                    <input
-                                            disabled
-                                            name="item[${item['id']}]"
-                                            style="width: 70px;"
-                                            type="number"
-                                            class="form-control quantity-product-edit-order"
-                                            value=${qty}
-                                            min="1"
-                                            />
+                                    <input name="item[${item['id']}]"
+                                        style="width: 70px;"
+                                        type="number"
+                                        class="form-control quantity-product-edit-order"
+                                        value=${qty}
+                                        min="1"
+                                    />
                                 </div>
                             </div>
                             <span class="d-block ml-5 font-weight-bold item-price">${item['price']}$</span>
                             <a href="##">
                             </a>
                         </div>
-                    </div>
-                    `); 
+                    </div>`); 
             }
             
             var orderDetailModal = $('#orderDetailModal');
             //detail order
-             $('.btn-detail-order').on('click',function(){
+            $('.btn-detail-order').on('click',function(){
                 orderDetailModal.show();
                 console.log($(this).attr('data-order'))
                 var data = {};
@@ -97,6 +93,8 @@
                             console.log(products);
                             console.log(productsOrder);
                             $(".order-info").empty();
+                            $('#products-list').empty();
+
                             $('.order-info').append("name: "+orderShow['name']+'<br/>'
                                 +"phone: "+orderShow['phone']+'<br/>'
                                 +"address: "+orderShow['address']+'<br/>'
@@ -115,16 +113,11 @@
                             $( "#edit-order-date" ).val(orderShow['date'])
                             $( '#edit-order-qty').val(orderShow['quantity'])
                             $( '#edit-order-total').val(orderShow['total'])
-                            
-                            editor.setData(orderShow['note']);
-                            $('#products-list').empty();
+                            editor.val(orderShow['note']);
                             editOrder();
                             checkOrder(products,productsOrder);
                             update_amount();
                             updateTolQtyEditOrder();
-                            // let myForm = document.getElementById('order-show');
-                            // formDataUpdate = new FormData(myForm);
-                            // console.log(formDataUpdate);
                         }, 
                         error: function(res) {
                         }
@@ -180,61 +173,9 @@
 
         };
 
-        
-
-        
         var initSubmit = function () {     
             //update order 
-            $('#order-show').submit(function(event){
-                event.preventDefault();
-                var formDataUpdate = new FormData(this);
-                console.log('formData'+formDataUpdate);
-                console.log('test img',$('#edit-upload-order-avt').prop("files")[0]);
-                var file_avatar = $('#edit-upload-order-avt').prop("files")[0];
-                if(file_avatar != undefined){
-                    formDataUpdate.append('avatar', file_avatar);
-                }
-                
-                try {
-                    $.ajax({
-                        type:'post',
-                        url:'/master/z003/update',
-                        dataType:'json',
-                        contentType: false,
-                        processData: false,
-                        loading: true,
-                        data: formDataUpdate,
-                        success: function(res){
-                            alert("Updated order")
-                            getListContent();
-                            $('.modal').css("display", "none");          
-                        }, 
-                        error: function(res) {
-                            $("#update_noti_err").empty();
-                            var er =  res.responseJSON.errors;
-                            for (const property in er) {
-                                $("#update_noti_err").append(`
-                                <div role="alert" aria-live="assertive" aria-atomic="true" class="toast" data-autohide="true"  data-delay="0" style="">
-                                    <div class="toast-header">
-                                        <strong class="mr-auto">Error</strong>
-                                        <small><?php echo " " . date("h:i:sa"); ?></small>
-                                        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="toast-body">
-                                        ${property}  ${er[property]}
-                                    </div>
-                                </div>`
-                                )
-                            }
-                            $(".toast").toast('show');
-                        }
-                    })
-                } catch (e) {
-                    alert('' + e.message);
-                }
-            });
+            updateOrder();
         }
     };
 
@@ -248,3 +189,65 @@
         });
     });
 }(jQuery, $.app));
+
+function updateOrder() {
+    $('#order-show').submit(function(event){
+        event.preventDefault();
+        var formDataUpdate = new FormData(this);
+        console.log('formData'+formDataUpdate);
+        console.log('test img',$('#edit-upload-order-avt').prop("files")[0]);
+        var file_avatar = $('#edit-upload-order-avt').prop("files")[0];
+        if(file_avatar != undefined){
+            formDataUpdate.append('avatar', file_avatar);
+        }else{
+            // formDataUpdate.append('avatar', $('#edit-order-avt'));
+        }
+        console.log($('#edit-order-avt'),$('#edit-upload-order-avt') );
+        var q = $('.quantity-product-edit-order');
+        for(var z=0;z<q.length; z++){
+            if(q[z].value){
+                formDataUpdate.append(q[z].getAttribute('name'),q[z].value);
+                console.log(q[z].getAttribute('name'),q[z].value);
+            }
+        }
+        try {
+            $.ajax({
+                type:'post',
+                url:'/master/z003/update',
+                dataType:'json',
+                contentType: false,
+                processData: false,
+                loading: true,
+                data: formDataUpdate,
+                success: function(res){
+                    alert("Updated order")
+                    getListContent();
+                    $('.modal').css("display", "none");          
+                }, 
+                error: function(res) {
+                    $("#update_noti_err").empty();
+                    var er =  res.responseJSON.errors;
+                    for (const property in er) {
+                        $("#update_noti_err").append(`
+                        <div role="alert" aria-live="assertive" aria-atomic="true" class="toast" data-autohide="true"  data-delay="0" style="">
+                            <div class="toast-header">
+                                <strong class="mr-auto">Error</strong>
+                                <small><?php echo " " . date("h:i:sa"); ?></small>
+                                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="toast-body">
+                                ${property}  ${er[property]}
+                            </div>
+                        </div>`
+                        )
+                    }
+                    $(".toast").toast('show');
+                }
+            })
+        } catch (e) {
+            alert('' + e.message);
+        }
+    });    
+}

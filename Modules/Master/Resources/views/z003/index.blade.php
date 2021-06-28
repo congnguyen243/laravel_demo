@@ -21,7 +21,7 @@
     <script src="//cdn.ckeditor.com/4.16.1/basic/ckeditor.js"></script>    
     <script src="//cdn.ckeditor.com/4.16.1/basic/adapters/jquery.js"></script>
     <script type="text/javascript" src="/modules/master/js/z003.js"></script>
-    <script type="text/javascript" src="/modules/master/js/z003-edit.js"></script>
+    <!-- <script type="text/javascript" src="/modules/master/js/z003-edit.js"></script> -->
 @endsection
 @section('content')
 <div id="content-wrapper">
@@ -110,8 +110,8 @@
                                         </div>
                                         <div class="row mt-3 mx-4">
                                             <div class="col-12">
-                                                <input class="order-form-input" type="hidden" id="update-quantity-order" name="quantity" >
-                                                <input class="order-form-input" type="hidden" id="update-total-order" name="total" >
+                                                <input class="order-form-input" id="update-quantity-order" name="quantity" >
+                                                <input class="order-form-input" id="update-total-order" name="total" >
                                             </div>
                                         </div>
                                         <div class="row mt-3 mx-4">
@@ -163,7 +163,7 @@
                                                     </a>
                                                 </div>
                                             </div>
-                                        @endforeach                                    
+                                        @endforeach                                   
                                     </div>
                                     <div class="col-12">
                                         <hr/>
@@ -194,7 +194,7 @@
 
         <!-- DataTables Example -->
         <div id="orders">
-          @include('master::z003.listorder')
+            @include('master::z003.listorder')
         </div>
         <!-- /dataTables example -->
     </div>

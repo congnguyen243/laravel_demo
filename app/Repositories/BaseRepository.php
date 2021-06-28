@@ -2,8 +2,6 @@
 
 namespace App\Repositories;
 
-use App\Repositories\RepositoryInterface;
-
 abstract class BaseRepository implements RepositoryInterface
 {
     //model muốn tương tác

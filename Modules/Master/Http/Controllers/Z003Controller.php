@@ -33,7 +33,7 @@ class Z003Controller extends Controller
     {
         $products = $this->productRepo->getAll();
         $orders = $this->orderRepo->getAll();
-        return view('master::z003.index')->with('dataProduct', $products)->with('dataOrder', $orders);
+        return view('master::z003.index')->with('dataProduct', $products)->with('dataOrder', $orders)->with('orderItem','orderItem')->with('productOfOrder','productOfOrder');
     }
 
     /**
@@ -98,7 +98,10 @@ class Z003Controller extends Controller
             'productOrder'=>$productOrder,
             'products'=>$products
         );
-        return response()->json($result);
+        
+        if($request->ajax()){        
+            return view('master::z003.orderForm')->with('orderItem',$order)->with('dataProduct',$products)->with('productOfOrder',$productOrder);
+        };
     }
 
     /**
@@ -172,7 +175,7 @@ class Z003Controller extends Controller
         if($request->ajax()){
             return view('master::z003.listorder')->with('dataOrder',$data);
         }
-        return $data;
+        // return $data;
     }
 
     //service for spring
